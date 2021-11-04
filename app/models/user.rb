@@ -1,26 +1,22 @@
 class User < ApplicationRecord
-  
+
   has_many :memberships
   has_many :rooms, through: :memberships
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  after_create :set_username
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates_uniqueness_of :username
+  validates :username, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false, format: { with: /\A[a-zA-Z0-9]+\z/ }
+
+  # TODO: Do We restrict users to accounts. API will login any users atm.
 
   def is_member?(room)
     rooms.include?(room)
   end
 
-
-  private
-
-  def set_username
-    self.update(username: SecureRandom.hex(10))
+  def generate_jwt
+    # In production this key will be set using an environment variable
+    JWT.encode({ id: id, exp: 10.minutes.from_now.to_i }, Rails.application.secrets.secret_key_base)
   end
 
 end

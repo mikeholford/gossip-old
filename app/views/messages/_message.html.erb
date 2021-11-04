@@ -1,4 +1,4 @@
-<div data-user-id="<%= message.user.id %>" class="message mb-2 <%= 'me' if primary %> ">
+<div data-user-id="<%= message.user.id %>" class="message mb-2 <%= 'me' if primary %> <%= message.membership.role %> ">
     <div class="content-container">
         <div class="content">
         <%= message.body %>

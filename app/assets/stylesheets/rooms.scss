@@ -45,9 +45,15 @@
             .content-container {
                 float: right;
                 .content {
-                    background-color: #007bff;
+                    background-color: #23d160;
                     color: white;
                 }
+            }
+        }
+        &.owner {
+            .content {
+                background-color: #3675a6;
+                color: white;
             }
         }
     }

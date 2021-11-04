@@ -1,17 +1,18 @@
 class RoomsController < ApplicationController
+  before_action :authenticate_auth_link, only: %i[ show ]
   before_action :authenticate_user!
+  before_action :set_account, only: %i[ index ]
   before_action :set_room, only: %i[ show edit update destroy ]
   before_action :authenticate_membership, only: [:show]
 
 
   # GET /rooms or /rooms.json
   def index
-    @rooms = Room.all
+    @rooms = @account.rooms
   end
 
   # GET /rooms/1 or /rooms/1.json
   def show
-
   end
 
   # GET /rooms/new
@@ -61,9 +62,25 @@ class RoomsController < ApplicationController
   end
 
   private
+
+    def authenticate_auth_link
+      if params[:auth].present?
+        begin
+          jwt_payload = JWT.decode(params[:auth], Rails.application.secrets.secret_key_base).first
+          user = User.find_by(id: jwt_payload['id'])
+          sign_in(:user, user) if user.present?
+        rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+          return false
+        end
+      end
+    end
     
     def authenticate_membership
       redirect_to root_url, alert: "Access Denied" unless current_user.is_member?(@room)
+    end
+
+    def set_account
+      @account = Account.friendly.find(params[:account_id])
     end
 
     def set_room

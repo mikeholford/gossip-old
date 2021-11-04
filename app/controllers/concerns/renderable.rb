@@ -15,7 +15,7 @@ module Renderable
   end
 
   def render_error(element)
-    render json: { errors: element.errors.messages.values.flatten },
+    render json: { errors: element.errors.messages.flatten },
       status: :unprocessable_entity
   end
 
