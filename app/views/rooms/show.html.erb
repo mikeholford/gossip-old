@@ -1,0 +1,22 @@
+
+
+<div id="room" class='room' data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>">
+
+  <div class="chat-room">
+    <p><%= @room.name %> (<%= @room.users.uniq.count %> Users)</p>
+
+    <div class="messages" id="messages">
+      <% @room.messages.each do |message| %>
+        <%= render 'messages/message', message: message, primary: (message.user == current_user) %>
+      <% end %>
+      <span id="chat-end"></span>
+    </div>
+
+    <hr>
+
+    <div class="chat-box">
+      <%= render "messages/form", message: Message.new, room: @room %>
+    </div>
+  </div>
+  
+</div>

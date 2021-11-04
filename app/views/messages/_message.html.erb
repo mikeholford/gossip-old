@@ -1,0 +1,10 @@
+<div data-user-id="<%= message.user.id %>" class="message mb-2 <%= 'me' if primary %> ">
+    <div class="content-container">
+        <div class="content">
+        <%= message.body %>
+        </div>
+        <div class="user">
+        <i><%= message.user.email %></i>
+        </div>
+    </div>
+</div>

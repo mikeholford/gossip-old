@@ -1,0 +1,55 @@
+.chat-room {
+
+    overflow-y: scroll;
+    
+
+    &::-webkit-scrollbar { /* WebKit */
+        width: 0;
+        height: 0;
+    }
+
+    height: 100vh;
+
+    .chat-box {
+        width: 100%;
+        background-color: white;
+        position: fixed;
+        bottom: 0;
+        padding: 20px;
+    }
+    .messages {
+        height: 100%;
+        overflow-y: scroll;
+        padding-bottom: 50px;
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar { width: 0 !important }
+    }
+   
+    .message {
+        min-height: 60px;
+        .content-container {
+            display: inline-block;
+            .content {
+                background-color: #eeeeee;
+                padding: 10px 15px;
+                border-radius: 25px;;
+            }
+            .user {
+                font-size: 0.78rem;
+                color: grey;
+                margin-left: 10px;
+            }
+        }
+        &.me {
+            .content-container {
+                float: right;
+                .content {
+                    background-color: #007bff;
+                    color: white;
+                }
+            }
+        }
+    }
+    
+}

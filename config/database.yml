@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: <%= Rails.application.credentials.postgres[:username] %>
+  password: <%= Rails.application.credentials.postgres[:password] %>
+  pool: 5
+  timeout: 5000
+  host: <%= Rails.application.credentials.postgres[:host] %>
+  database: <%= Rails.application.credentials.postgres[:db] %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
