@@ -34,5 +34,7 @@ gem 'devise'
 gem 'friendly_id', '~> 5.4.0'
 gem 'redis-namespace'
 gem 'jwt'
+gem 'http'
+gem 'sidekiq'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

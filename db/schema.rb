@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_215643) do
+ActiveRecord::Schema.define(version: 2021_11_05_085618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,8 +84,21 @@ ActiveRecord::Schema.define(version: 2021_11_04_215643) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "webhook_endpoints", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "url"
+    t.string "events"
+    t.string "status"
+    t.json "logs", default: []
+    t.string "secret"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_webhook_endpoints_on_account_id"
+  end
+
   add_foreign_key "memberships", "rooms"
   add_foreign_key "memberships", "users"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "webhook_endpoints", "accounts"
 end

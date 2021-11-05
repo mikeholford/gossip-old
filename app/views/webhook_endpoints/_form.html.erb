@@ -1,0 +1,47 @@
+<%= form_with(model: webhook_endpoint) do |form| %>
+  <% if webhook_endpoint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(webhook_endpoint.errors.count, "error") %> prohibited this webhook_endpoint from being saved:</h2>
+
+      <ul>
+        <% webhook_endpoint.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :account_id %>
+    <%= form.text_field :account_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :events %>
+    <%= form.text_field :events %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :logs %>
+    <%= form.text_field :logs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :secret %>
+    <%= form.text_field :secret %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

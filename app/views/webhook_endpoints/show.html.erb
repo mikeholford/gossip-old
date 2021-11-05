@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @webhook_endpoint.account_id %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @webhook_endpoint.url %>
+</p>
+
+<p>
+  <strong>Events:</strong>
+  <%= @webhook_endpoint.events %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @webhook_endpoint.status %>
+</p>
+
+<p>
+  <strong>Logs:</strong>
+  <%= @webhook_endpoint.logs %>
+</p>
+
+<p>
+  <strong>Secret:</strong>
+  <%= @webhook_endpoint.secret %>
+</p>
+
+<%= link_to 'Edit', edit_webhook_endpoint_path(@webhook_endpoint) %> |
+<%= link_to 'Back', webhook_endpoints_path %>
