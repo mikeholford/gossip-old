@@ -3,6 +3,10 @@ class SendWebhookJob < ApplicationJob
 
   MAX_RETRIES = 10
 
+endpoint = "https://uh.ngrok.io/api/v1/messages/gossip"
+data = {data:{id: "xxx", user_id: 3, room_id: 10, category: 'text', body: "HELLO" }}
+
+
   def perform(endpoint, data, retry_count=0)
 
     # return if cancelled?
@@ -27,12 +31,12 @@ class SendWebhookJob < ApplicationJob
       wait = 2 ** retry_count
       SendWebhookJob.set(wait: wait.minutes).perform_later(endpoint, data, retry_count + 1)
       if retry_count == 3 # Send a notification to developer
-        Rails.logger.info "Failed to send webhook!!! Trying again..."
+        puts "Failed to send webhook!!! Trying again..."
         # AdminService.new.error("⚠️ WebhookDeliveryError ⚠️\n\nRetry #: #{retry_count}\nEndpoint: #{endpoint.url}\n\nData: #{data}")
         # OrganisationMailer.webhook_delivery_error(endpoint.organisation, endpoint.url, retry_count, data).deliver_later 
       end
     elsif retry_count >= MAX_RETRIES
-        Rails.logger.info "Completely failed to send webhook!!!"
+        puts "Completely failed to send webhook!!!"
     #   AdminService.new.error("❌ WebhookDeliveryFailed ❌\n\nRetry #: #{retry_count}\nEndpoint: #{endpoint.url}\n\nData: #{data}")
     #   OrganisationMailer.webhook_delivery_failed(endpoint.organisation, endpoint.url, retry_count, data).deliver_later
     end
