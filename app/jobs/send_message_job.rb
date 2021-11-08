@@ -4,18 +4,13 @@ class SendMessageJob < ApplicationJob
 
   def perform(message)
 
-    primary = @job_renderer.render(
+    html = @job_renderer.render(
       partial: "messages/message", 
-      locals: {message: message, primary: true}
+      locals: {message: message, primary: false, ref: message.id, status: ""}
     )
 
-    default = @job_renderer.render(
-      partial: "messages/message", 
-      locals: {message: message, primary: false}
-    )
+    ActionCable.server.broadcast("room_channel_#{message.room_id}", {html: html, message: message})
 
-    ActionCable.server.broadcast("room_channel_#{message.room_id}", {primary: primary, default: default, message: message})
-    
   end
 
   private

@@ -21,6 +21,7 @@ class MessagesController < ApplicationController
 
   # POST /messages or /messages.json
   def create
+    @reference = params[:message][:reference]
     @message = Message.new(message_params)
     @message.user = current_user
     @message.save

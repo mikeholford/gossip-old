@@ -1,21 +1,54 @@
 <%= form_for([room.account, room, message], remote: true) do |form| %>
-  <% if message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+  <div class="fixed w-full flex justify-between bg-white" style="bottom: 0px;">
 
-      <ul>
-        <% message.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <%= form.hidden_field :reference, value: '' %>
+    <%= form.hidden_field :room_id, value: room.id %>
+    <%= form.text_field :body, id: "chat-box", class: 'flex-grow m-2 py-1 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none', placeholder: 'Type here...', style: "outline: none;" %>
+    <%= button_tag(type: 'submit', class: "m-2", id: "chat-button", style: "outline: none;") do %>
 
-  <%= form.hidden_field :room_id, value: room.id %>
 
-  <div class="input-group">
-    <%= form.text_field :body, class: 'form-control', placeholder: 'Type here...' %>
-    <%= form.submit "Add Message", class: "btn btn-primary", id: "chat-button" %>
+    <svg class="transform rotate-90 text-blue-400 w-12 h-12 py-2 mr-2" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+
+     
+    <% end %>
+
   </div>
-
 <% end %>
+ 
+
+
+<script>
+
+  // Add message to body
+  var form = document.querySelector("#new_message")
+  form.addEventListener("submit", function(e){
+
+    var chat_box = document.getElementById('chat-box')
+    var body = chat_box.value;
+    
+    if (body === "") {
+      e.preventDefault()
+    } else {
+    
+      var template = htmlToElement("<%= j render 'messages/message', message: Message.new(room_id: room.id, user_id: current_user.id, body: ""), primary: true, ref: '', status: 'PENDING' %>")
+  
+      template.id = Math.random().toString(36).slice(2)
+      template.getElementsByClassName('body')[0].innerHTML = body
+      document.querySelector("#message_reference").value = template.id
+    
+      var messageContainer = document.getElementById('messages');
+      messageContainer.innerHTML = messageContainer.innerHTML + template.outerHTML;
+  
+      setTimeout(function(){ form.reset(); }, 100);
+    }
+    
+  });
+
+  function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+  }
+
+</script>

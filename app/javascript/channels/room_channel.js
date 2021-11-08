@@ -8,9 +8,6 @@ document.addEventListener('turbolinks:load', () => {
     connected() {
       console.log("Connected to room " + room_id)
       // Called when the subscription is ready for use on the server
-
-      document.getElementById('chat-end').scrollIntoView();
-
     },
 
     disconnected() {
@@ -20,20 +17,13 @@ document.addEventListener('turbolinks:load', () => {
     received(data) {
       const user_id = Number(room.getAttribute('data-user-id'));
 
-      let html;
-
-      if (user_id === data.message.user_id) {
-        html = data.primary
+      if (user_id !== data.message.user_id) {
+        const messageContainer = document.getElementById('messages')
+        messageContainer.innerHTML = messageContainer.innerHTML + data.html
       } else {
-        html = data.default
+        // Change the status of the message to DELIVERED for current user
       }
-      
-      const messageContainer = document.getElementById('messages')
-      messageContainer.innerHTML = messageContainer.innerHTML + html
 
-      document.getElementById('chat-end').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      
     }
   });
 
