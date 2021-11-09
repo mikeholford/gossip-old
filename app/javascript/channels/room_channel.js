@@ -22,6 +22,12 @@ document.addEventListener('turbolinks:load', () => {
         messageContainer.innerHTML = messageContainer.innerHTML + data.html
       } else {
         // Change the status of the message to DELIVERED for current user
+        setTimeout(function () { 
+          const new_message = document.getElementById(data.message.id);
+          new_message.setAttribute('data-status', 'delivered')
+          new_message.getElementsByClassName('status')[0].innerHTML = "delivered"
+        }, 500);
+
       }
 
     }

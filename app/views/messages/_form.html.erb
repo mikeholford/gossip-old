@@ -18,6 +18,7 @@
 
 
 <script>
+  // TODO: Move to Javascripts
 
   // Add message to body
   var form = document.querySelector("#new_message")
@@ -30,7 +31,7 @@
       e.preventDefault()
     } else {
     
-      var template = htmlToElement("<%= j render 'messages/message', message: Message.new(room_id: room.id, user_id: current_user.id, body: ""), primary: true, ref: '', status: 'PENDING' %>")
+      var template = htmlToElement("<%= j render 'messages/message', message: Message.new(room_id: room.id, user_id: current_user.id, body: ""), primary: true, ref: '', status: 'pending' %>")
   
       template.id = Math.random().toString(36).slice(2)
       template.getElementsByClassName('body')[0].innerHTML = body

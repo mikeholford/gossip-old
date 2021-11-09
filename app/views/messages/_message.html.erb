@@ -1,5 +1,9 @@
-<div class="w-full inline-block" id="<%= ref %>">
-    <div data-user-id="<%= message.user.id %>" class="message <%= primary ? 'bg-blue-300 float-right' : 'bg-gray-300 float-left' %>  mx-4 my-1 p-2 rounded-lg" style="max-width: 75%;">
-        <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br/>').html_safe) %></span> - <i><%= message.user.email %> <span class="status"><%= status %></span></i>
+<div class="w-full inline-block relative" id="<%= ref %>" data-status="<%= status %>">
+    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-5 my-1" style="max-width: 75%;">
+        <div data-user-id="<%= message.user.id %>" class="message <%= primary ? 'bg-blue-300' : 'bg-gray-300' %>  p-2 rounded-lg" >
+            <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span> - <i><%= message.user.email %></i>
+        </div>
+        <div class="status <%= status if primary %>"></div>
     </div>
 </div>
+
