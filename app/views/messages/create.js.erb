@@ -1,6 +1,6 @@
 var message = document.getElementById("<%= @reference %>")
-message.setAttribute('data-status', 'sent')
-message.getElementsByClassName('status')[0].innerHTML = "SENT"
+var message_status = message.getElementsByClassName('status')[0]
+message_status.setAttribute('data-status', 'sent')
 
 
 setTimeout(function(){ message.id = "<%= @message.id %>" }, 100);

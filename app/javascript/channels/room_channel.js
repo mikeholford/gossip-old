@@ -23,9 +23,14 @@ document.addEventListener('turbolinks:load', () => {
       } else {
         // Change the status of the message to DELIVERED for current user
         setTimeout(function () { 
+          // const new_message = document.getElementById(data.message.id);
+          // new_message.setAttribute('data-status', 'delivered')
+          // new_message.getElementsByClassName('status')[0].innerHTML = "delivered"
+
           const new_message = document.getElementById(data.message.id);
-          new_message.setAttribute('data-status', 'delivered')
-          new_message.getElementsByClassName('status')[0].innerHTML = "delivered"
+          const message_status = new_message.getElementsByClassName('status')[0]
+          message_status.setAttribute('data-status', 'delivered')
+
         }, 500);
 
       }

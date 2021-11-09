@@ -9,21 +9,18 @@
 
 
 .status {
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    right: 0px;
-    bottom: 10px;
-    background-position: center;
+    width: 20px;
+    height: 20px;
+    background-position: right center;
     background-size: contain;
     background-repeat: no-repeat;
-    &.pending {
-        background-image: url(/assets/icons/circle.svg);
+    &[data-status='pending'] {
+        background-image: url(/assets/icons/clock.svg);
     }
-    &.sent {
+    &[data-status='sent'] {
         background-image: url(/assets/icons/check.svg);
     }
-    &.delivered {
-        background-image: url(/assets/icons/check.svg);
+    &[data-status='delivered'] {
+        background-image: url(/assets/icons/double_check.svg);
     }
 }
