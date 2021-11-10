@@ -3,8 +3,6 @@
         <div data-user-id="<%= message.user.id %>" class="message relative table-cell <%= primary ? 'bg-blue-300' : 'bg-gray-300' %>  p-2 rounded-lg" >
             <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span> - <i><%= message.user.email %></i>
             <% if primary %><div class="status inline-block	align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
-        </div>
-        
+        </div>  
     </div>
 </div>
-

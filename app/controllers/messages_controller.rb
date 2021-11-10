@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  skip_forgery_protection
   before_action :set_message, only: %i[ show edit update destroy ]
 
   # GET /messages or /messages.json
@@ -8,6 +9,11 @@ class MessagesController < ApplicationController
 
   # GET /messages/1 or /messages/1.json
   def show
+  end
+
+  def typing 
+    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: current_user.id, category: 'typing'})
+    render json: {typing: true}
   end
 
   # GET /messages/new

@@ -3,7 +3,7 @@
 
     <%= form.hidden_field :reference, value: '' %>
     <%= form.hidden_field :room_id, value: room.id %>
-    <%= form.text_field :body, id: "chat-box", class: 'flex-grow m-2 py-1 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none', placeholder: 'Type here...', style: "outline: none;" %>
+    <%= form.text_field :body, id: "chat-box", class: 'flex-grow m-2 py-1 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none', placeholder: 'Type here...', style: "outline: none;", data: {typing: false} %>
     <%= button_tag(type: 'submit', class: "m-2", id: "chat-button", style: "outline: none;") do %>
 
 
@@ -20,11 +20,20 @@
 <script>
   // TODO: Move to Javascripts
 
-  // Add message to body
   var form = document.querySelector("#new_message")
+  var chat_box = document.getElementById('chat-box')
+  
+  chat_box.oninput = () => {
+    if (chat_box.getAttribute('data-typing') === 'false') {
+      show_typing();
+      chat_box.setAttribute('data-typing', 'true')
+    }
+  }
+
+  // Add message to body
   form.addEventListener("submit", function(e){
 
-    var chat_box = document.getElementById('chat-box')
+    // var chat_box = document.getElementById('chat-box')
     var body = chat_box.value;
     
     if (body === "") {
@@ -50,6 +59,12 @@
     html = html.trim(); // Never return a text node of whitespace as the result
     template.innerHTML = html;
     return template.content.firstChild;
+  }
+
+  async function show_typing(e){
+    result = await whisper('/<%= room.account.slug %>/rooms/<%= room.id %>/messages/typing', {}, 'Error fetching activity')
+    if (result.typing) {console.log('Typing True')}
+    setTimeout(function(){ chat_box.setAttribute('data-typing', 'false') }, 3000);
   }
 
 </script>

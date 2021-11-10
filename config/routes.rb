@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   resources :accounts, path: '' do 
     resources :rooms do
       resources :memberships, only: [:create, :delete]
-      resources :messages, only: [:create, :delete]
+      resources :messages, only: [:create, :delete] do 
+        collection do 
+          post :typing
+        end
+      end
     end
     resource :tokens, only: :create
   end  
