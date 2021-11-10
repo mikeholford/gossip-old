@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   end
 
   def typing 
-    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: current_user.id, category: 'typing'})
+    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: params[:user_id], category: 'typing', role: params[:role]})
     render json: {typing: true}
   end
 
@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
     @message.user = current_user
     @message.save
     @message.send_webhook('message.created')
-    SendMessageJob.perform_later(@message)
+    SendMessageJob.perform_later(@message, 'app')
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json

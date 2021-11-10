@@ -23,6 +23,7 @@
   var form = document.querySelector("#new_message")
   var chat_box = document.getElementById('chat-box')
   
+  
   chat_box.oninput = () => {
     if (chat_box.getAttribute('data-typing') === 'false') {
       show_typing();
@@ -48,6 +49,8 @@
     
       var messageContainer = document.getElementById('messages');
       messageContainer.innerHTML = messageContainer.innerHTML + template.outerHTML;
+
+      window.scrollTo(0,document.body.scrollHeight);
   
       setTimeout(function(){ form.reset(); }, 100);
     }
@@ -62,9 +65,13 @@
   }
 
   async function show_typing(e){
-    result = await whisper('/<%= room.account.slug %>/rooms/<%= room.id %>/messages/typing', {}, 'Error fetching activity')
+    const container = document.getElementById('room');
+    const room_id = Number(container.getAttribute('data-room-id'));
+    const user_id = Number(container.getAttribute('data-user-id'));
+    const role = container.getAttribute('data-role')
+    result = await whisper('/<%= room.account.slug %>/rooms/<%= room.id %>/messages/typing', {room_id: room_id, user_id: user_id, role: role}, 'Error fetching activity')
     if (result.typing) {console.log('Typing True')}
-    setTimeout(function(){ chat_box.setAttribute('data-typing', 'false') }, 3000);
+    setTimeout(function(){ chat_box.setAttribute('data-typing', 'false') }, 2000);
   }
 
 </script>

@@ -1,13 +1,23 @@
-<div data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" id="room" class="pb-24" style="overscroll-behavior: none;">
+<!-- TODO: Improve config settings -->
+<style>
+  <% @room.config["style"].each do |k, v| %>
+    .custom-<%= k %> {
+      background-color: <%= v %> !important;
+    }
+  <% end %>
+</style>
+
+
+<div data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" data-role="<%= @membership.role %>" id="room" class="pb-24" style="overscroll-behavior: none;">
 
   <!-- HEADER -->
-  <div class="fixed w-full bg-blue-400 h-16 pt-2 text-white flex justify-between shadow-md z-10" style="top:0px; overscroll-behavior: none;">
+  <div class="fixed w-full bg-blue-400 h-16 pt-2 text-white flex justify-between shadow-md z-10 custom-header" style="top:0px; overscroll-behavior: none;">
     
     <a href="#">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 h-12 my-1 text-blue-100 ml-2"><path class="text-blue-100 fill-current" d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z"/></svg>
     </a>
     <div class="my-3 text-blue-100 font-bold text-lg tracking-wide">
-      <%= @room.name %> (<%= @room.users.uniq.count %> Users)
+      <%= @room.name %>
     </div>
 
 
@@ -19,7 +29,7 @@
 
   <!-- MESSAGES -->
   <div class="messages mt-20 mb-16" id="messages">
-    <% @room.messages.each do |message| %>
+    <% @room.messages.order(:created_at).each do |message| %>
       <%= render 'messages/message', message: message, primary: (message.user == current_user), ref: message.id, status: "delivered" %>
     <% end %>
   </div>

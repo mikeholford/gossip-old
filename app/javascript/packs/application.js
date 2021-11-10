@@ -12,5 +12,4 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-
-require("packs/message")
+require("custom/message")

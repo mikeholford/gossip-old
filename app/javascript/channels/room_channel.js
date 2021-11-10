@@ -1,4 +1,7 @@
 import consumer from "./consumer"
+import { tidy } from "custom/message"
+
+
 
 document.addEventListener('turbolinks:load', () => {
   const room = document.getElementById('room');
@@ -20,11 +23,10 @@ document.addEventListener('turbolinks:load', () => {
       switch (data.category) {
         case 'message':
           if (user_id !== data.message.user_id) {
-            remove_all_typing()
-            add_html(data.html)
             // Add message to receiving users thread
-            // const messageContainer = document.getElementById('messages')
-            // messageContainer.innerHTML = messageContainer.innerHTML + data.html
+            remove_all_typing();
+            add_html(data.html);
+            window.scrollTo(0, document.body.scrollHeight);
           } else {
             // Update message status to delivered 
             setTimeout(function () {
@@ -36,10 +38,22 @@ document.addEventListener('turbolinks:load', () => {
           break;
         case 'typing':
           if (user_id !== data.user_id) {
+            var typing = typing_html(data.role)
+            remove_all_typing()
+            add_typing(typing)
+          }
+          break;
+        default:
+      }
+      
+    }
+  });
 
-            var typing = `<div class="w-full inline-block relative typing" id="">
+
+  function typing_html(role) {
+    return `<div class="w-full inline-block relative typing" id="">
                             <div class="float-left ml-1 mr-5 my-1" style="max-width: 75%;">
-                                <div class=" relative table-cell bg-gray-300 px-2 py-4 rounded-lg" >
+                                <div class="${role} relative table-cell bg-gray-300 px-2 py-4 rounded-lg" >
                                     <svg id="typing_bubble" data-name="typing bubble" xmlns="http://www.w3.org/2000/svg" width="24" height="6" viewBox="0 0 24 6">
                                         <defs>
                                             <style>
@@ -63,24 +77,7 @@ document.addEventListener('turbolinks:load', () => {
                                 </div>
                             </div>
                           </div>`
-                                              
-
-            remove_all_typing()
-            add_typing(typing)
-
-            // setTimeout(function () {
-            //   remove_typing()
-            // }, 3000);
-
-
-          }
-          break;
-        default:
-      }
-      
-    }
-  });
-
+  }
 
   function add_html(html) {
     const messageContainer = document.getElementById('messages')
@@ -93,7 +90,7 @@ document.addEventListener('turbolinks:load', () => {
     typing_element.id = typing_id
     add_html(typing_element.outerHTML)
 
-    // Set to remove after 3 seconds
+    // Set to remove after 5 seconds
     setTimeout(function () {
       var ele = document.getElementById(typing_id)
       if (ele) { 
@@ -101,7 +98,7 @@ document.addEventListener('turbolinks:load', () => {
       } else {
         console.log("Not found!")
       }
-    }, 5000);
+    }, 3000);
   }
 
   function remove_all_typing() {

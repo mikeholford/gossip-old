@@ -2,14 +2,14 @@ class SendMessageJob < ApplicationJob
   queue_as :default
   before_perform :wardenize
 
-  def perform(message)
+  def perform(message, source)
 
     html = @job_renderer.render(
       partial: "messages/message", 
       locals: {message: message, primary: false, ref: message.id, status: ""}
     )
 
-    ActionCable.server.broadcast("room_channel_#{message.room_id}", {category: 'message', html: html, message: message})
+    ActionCable.server.broadcast("room_channel_#{message.room_id}", {category: 'message', html: html, message: message, source: source})
 
   end
 

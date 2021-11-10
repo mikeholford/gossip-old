@@ -1,8 +1,9 @@
 <div class="w-full inline-block relative" id="<%= ref %>"">
     <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-5 my-1" style="max-width: 75%;">
-        <div data-user-id="<%= message.user.id %>" class="message relative table-cell <%= primary ? 'bg-blue-300' : 'bg-gray-300' %>  p-2 rounded-lg" >
-            <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span> - <i><%= message.user.email %></i>
-            <% if primary %><div class="status inline-block	align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
+        <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
+            <% unless primary %><div class=""><small><i><%= message.user.email %></i></small></div><% end %>
+            <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>
+            <% if primary %><div class="status <%= primary ? "primary" : "#{message.membership.role}" %> inline-block	align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
         </div>  
     </div>
 </div>

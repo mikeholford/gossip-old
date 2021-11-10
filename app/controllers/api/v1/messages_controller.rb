@@ -8,7 +8,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
         if @membership.api?
             @message = Message.new(message_params)
             if @message.save
-                SendMessageJob.perform_later(@message)
+                SendMessageJob.perform_later(@message, 'api')
                 render :show, status: :ok
             else
                 render_error(@message)

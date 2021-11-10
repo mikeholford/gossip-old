@@ -1,9 +1,15 @@
+
+
 .message {   
+    background-color: #23d160;
+    color: white;
+    &.regular {
+        background-color: #D1D5DB !important;
+        color: black;
+    }
     &.api {
-        .content {
-            background-color: #3675a6 !important;
-            color: white;
-        }
+        background-color: #3675A6 !important;
+        color: white;
     }
 }
 
@@ -22,5 +28,17 @@
     }
     &[data-status='delivered'] {
         background-image: url(/assets/icons/double_check.svg);
+    }
+}
+
+
+.typing {    
+    .table-cell {
+        background-color: #D1D5DB !important;
+        color: white;
+        &.api {
+            background-color: #3675A6 !important;
+            color: white;
+        }
     }
 }
