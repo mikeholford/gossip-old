@@ -8,7 +8,7 @@
 </style>
 
 
-<div data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" data-role="<%= @membership.role %>" id="room" class="pb-24" style="overscroll-behavior: none;">
+<div data-account-slug="<%= @room.account.slug %>" data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" data-role="<%= @membership.role %>" id="room" class="pb-24" style="overscroll-behavior: none;">
 
   <!-- HEADER -->
   <div class="fixed w-full bg-blue-400 h-16 pt-2 text-white flex justify-between shadow-md z-10 custom-header" style="top:0px; overscroll-behavior: none;">
