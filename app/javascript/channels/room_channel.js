@@ -1,7 +1,5 @@
 import consumer from "./consumer"
-import { tidy } from "custom/message"
-
-
+import { htmlToElement } from 'custom/helpers'
 
 document.addEventListener('turbolinks:load', () => {
   const room = document.getElementById('room');
@@ -32,7 +30,8 @@ document.addEventListener('turbolinks:load', () => {
             setTimeout(function () {
               const new_message = document.getElementById(data.message.id);
               const message_status = new_message.getElementsByClassName('status')[0]
-              message_status.setAttribute('data-status', 'delivered')
+              message_status.setAttribute('data-status', 'sent')
+              message_status.setAttribute('data-status', 'delivered') // Move to diff function
             }, 500);
           }
           break;
@@ -103,13 +102,6 @@ document.addEventListener('turbolinks:load', () => {
 
   function remove_all_typing() {
     document.querySelectorAll('.typing').forEach(e => e.remove());
-  }
-
-  function htmlToElement(html) {
-    var template = document.createElement('template');
-    html = html.trim(); // Never return a text node of whitespace as the result
-    template.innerHTML = html;
-    return template.content.firstChild;
   }
 
 })

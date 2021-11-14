@@ -1,6 +1,2 @@
-var message = document.getElementById("<%= @reference %>")
-var message_status = message.getElementsByClassName('status')[0]
-message_status.setAttribute('data-status', 'sent')
-
-
-setTimeout(function(){ message.id = "<%= @message.id %>" }, 100);
+// Update ID once sent
+document.getElementById("<%= @reference %>").id = "<%= @message.id %>"

@@ -8,7 +8,7 @@
 </style>
 
 
-<div data-account-slug="<%= @room.account.slug %>" data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" data-role="<%= @membership.role %>" id="room" class="pb-24" style="overscroll-behavior: none;">
+<div data-account-slug="<%= @room.account.slug %>" data-room-id="<%= @room.id %>" data-user-id="<%= current_user.id %>" data-role="<%= @membership.role %>" id="room" class="room-wrapper pb-24" style="overscroll-behavior: none;">
 
   <!-- HEADER -->
   <div class="fixed w-full bg-blue-400 h-16 pt-2 text-white flex justify-between shadow-md z-10 custom-header" style="top:0px; overscroll-behavior: none;">
@@ -20,10 +20,8 @@
       <%= @room.name %>
     </div>
 
+    <%= inline_svg_tag('icons/menu.svg', class: "w-8 h-8 mt-2 mr-2 text-white", height: "24px", width: "24px") %>
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-dots-vertical w-8 h-8 mt-2 mr-2">
-      <path class="text-blue-100 fill-current" fill-rule="evenodd" d="M12 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-    </svg>
       
   </div>
 
