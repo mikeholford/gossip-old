@@ -1,5 +1,5 @@
 <div class="w-full inline-block relative" id="<%= ref %>"">
-    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-5 my-1" style="max-width: 75%;">
+    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-1 my-1" style="max-width: 75%;">
         <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
             <% unless primary %><div class=""><small><i><%= message.user.email %></i></small></div><% end %>
             <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>

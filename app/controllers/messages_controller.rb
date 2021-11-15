@@ -12,7 +12,8 @@ class MessagesController < ApplicationController
   end
 
   def typing 
-    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: params[:user_id], category: 'typing', role: params[:role]})
+    username = User.find(params[:user_id]).username
+    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: params[:user_id], username: username, category: 'typing', role: params[:role]})
     render json: {typing: true}
   end
 

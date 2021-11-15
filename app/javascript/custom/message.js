@@ -12,10 +12,10 @@ document.addEventListener('turbolinks:load', () => {
 
     // Trigger typing 
     chat_box.oninput = () => {
-        if (chat_box.getAttribute('data-typing') === 'false') {
+        // if (chat_box.getAttribute('data-typing') === 'false') {
             show_typing();
-            chat_box.setAttribute('data-typing', 'true')
-        }
+            // chat_box.setAttribute('data-typing', 'true')
+        // }
     }
 
     // Add message to body
@@ -46,8 +46,29 @@ document.addEventListener('turbolinks:load', () => {
 
     async function show_typing(e) {
         let result
-        result = await whisper("/" + account_slug + "/rooms/" + room_id + "/messages/typing", { room_id: room_id, user_id: user_id, role: role }, "Error fetching activity")
-        if (result.typing) { console.log('Typing True') }
-        setTimeout(function () { chat_box.setAttribute('data-typing', 'false') }, 2000);
+        result = await whisper("/" + account_slug + "/rooms/" + room_id + "/messages/typing", { room_id: room_id, user_id: user_id, role: role, typing: true }, "Error fetching activity")
+        if (result.typing) { 
+            console.log('Typing True') 
+            if (countdown) { clearInterval(countdown) }
+            type_count(3)
+        }
+        // setTimeout(function () { chat_box.setAttribute('data-typing', 'false') }, 2000);
+        // setTimeout(function () { 
+        //     type_count(5)
+        //  }, 3000);
     }
+
+
+    function type_count(val) {
+        var count = val
+        var countdown = setInterval(function () {
+            console.log(count)
+            count--;
+            if (count < 0) {
+                console.log("BOOM!")
+                clearInterval(countdown)
+            }
+        }, 1000);
+    }
+    
 })
