@@ -30,14 +30,11 @@
     <% @room.messages.order(:created_at).each do |message| %>
       <%= render 'messages/message', message: message, primary: (message.user == current_user), ref: message.id, status: "delivered" %>
     <% end %>
+  </div>
 
   <%= render "messages/typing" %>
-
-
-  </div>
 
   <!-- FORM -->
   <%= render "messages/form", message: Message.new, room: @room %>
 
 </div>
-

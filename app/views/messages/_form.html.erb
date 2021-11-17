@@ -13,4 +13,4 @@
   </div>
 <% end %>
 
-<span id="message-template" class="invisible"><%= render 'messages/message', message: Message.new(room_id: room.id, user_id: current_user.id, body: ""), primary: true, ref: '', status: 'pending' %></span>
+<span id="message-template" class="invisible fade-in"><%= render 'messages/message', message: Message.new(room_id: room.id, user_id: current_user.id, body: ""), primary: true, ref: '', status: 'pending' %></span>

@@ -12,9 +12,9 @@ class MessagesController < ApplicationController
   end
 
   def typing 
-    username = User.find(params[:user_id]).username
-    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: params[:user_id], username: username, category: 'typing', role: params[:role]})
-    render json: {typing: true}
+    username = User.find(params[:user_id]).username # TODO: get username from view
+    ActionCable.server.broadcast("room_channel_#{params[:room_id]}", {user_id: params[:user_id], username: username, category: 'typing', typing: params[:typing]})
+    render json: {success: true}
   end
 
   # GET /messages/new
