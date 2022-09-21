@@ -5,19 +5,18 @@ class Api::V1::MessagesController < Api::V1::BaseController
   def create
     @membership = Membership.find_by(room_id: params[:room_id], user_id: params[:user_id])
     if @membership.present?
-        if @membership.api?
-            @message = Message.new(message_params)
-            if @message.save
-                SendMessageJob.perform_later(@message, 'api')
-                render :show, status: :ok
-            else
-                render_error(@message)
-            end
-        else
-            render json: {errors: ["User", ["is not an api user"]]}
-        end
+      @message = Message.new(message_params)
+      @message.source = :api
+      if @message.save
+        @message.send_webhook('message.created')
+        SendMessageJob.perform_later(@message, 'api')
+        render :show, status: :ok
+      else
+        render_error(@message)
+      end
     else
-        render json: {error: "User is not a member" }
+      render_error(@message)
+      # render json: {error: "User is not a member" }
     end
   end
 

@@ -16,13 +16,13 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     received(data) {
-      const user_id = Number(room.getAttribute('data-user-id'));
+      const current_user_id = Number(room.getAttribute('data-user-id'));
 
       switch (data.category) {
         case 'message':
-          if (user_id !== data.message.user_id) {
+          if (current_user_id !== data.message.user_id) {
             add_html(data.html);
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+            // window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
           } else {
             // Update message status to delivered 
             setTimeout(function () {
@@ -34,7 +34,7 @@ document.addEventListener('turbolinks:load', () => {
           }
           break;
         case 'typing':
-          if (user_id !== data.user_id) {
+          if (current_user_id !== data.user_id) {
             if (data.typing) {
               add_typing(data.username)
             } else {

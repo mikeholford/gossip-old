@@ -2,7 +2,6 @@ import { whisper } from '../custom/helpers';
 
 document.addEventListener('turbolinks:load', () => {
     
-
     const container = document.getElementById('room');
     const account_slug = container.getAttribute('data-account-slug')
     const room_id = Number(container.getAttribute('data-room-id'));
@@ -45,7 +44,7 @@ document.addEventListener('turbolinks:load', () => {
     });
 
     async function start_typing() {
-        reset_countdown()
+        reset_typing_countdown()
         await whisper("/" + account_slug + "/rooms/" + room_id + "/messages/typing", { room_id: room_id, user_id: user_id, role: role, typing: true }, "Error fetching activity")
     }
 
@@ -53,13 +52,13 @@ document.addEventListener('turbolinks:load', () => {
         await whisper("/" + account_slug + "/rooms/" + room_id + "/messages/typing", { room_id: room_id, user_id: user_id, typing: false }, "Error fetching activity")
     }
 
-    function reset_countdown() {
+    function reset_typing_countdown() {
         if (countdown) { clearTimeout(countdown); }
-        countdown_timer();
+        typing_countdown_timer();
     }
     
     // Adjust the countdown time to change the length of time the user is considered typing
-    function countdown_timer() { 
+    function typing_countdown_timer() { 
         countdown = setTimeout(function () { stop_typing() }, 3000)
     }
     

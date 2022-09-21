@@ -3,6 +3,9 @@ class Message < ApplicationRecord
   belongs_to :room
 
   validates_presence_of :body
+  validate :api_user, if: -> {self.source == 'api'}
+
+  enum source: [:app, :api]
 
   def membership
     Membership.find_by(user_id: self.user_id, room_id: self.room_id)
@@ -25,6 +28,12 @@ class Message < ApplicationRecord
           updated_at: self.updated_at.to_s
         }
       })
+    end
+  end
+
+  def api_user
+    unless self.membership.role == 'api'
+      errors.add(:user, "is not an api user for this room")
     end
   end
 

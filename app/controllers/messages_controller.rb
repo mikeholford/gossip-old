@@ -31,9 +31,12 @@ class MessagesController < ApplicationController
     @reference = params[:message][:reference]
     @message = Message.new(message_params)
     @message.user = current_user
-    @message.save
-    @message.send_webhook('message.created')
-    SendMessageJob.perform_later(@message, 'app')
+    if @message.save 
+      @message.send_webhook('message.created')
+      SendMessageJob.perform_later(@message, 'app')
+    else
+      # TODO: handle errors
+    end
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json
