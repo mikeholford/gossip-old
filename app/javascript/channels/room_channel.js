@@ -22,15 +22,12 @@ document.addEventListener('turbolinks:load', () => {
         case 'message':
           if (current_user_id !== data.message.user_id) {
             add_html(data.html);
-            // window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
           } else {
-            // Update message status to delivered 
-            setTimeout(function () {
-              const new_message = document.getElementById(data.message.id);
-              const message_status = new_message.getElementsByClassName('status')[0]
-              message_status.setAttribute('data-status', 'sent')
-              message_status.setAttribute('data-status', 'delivered') // Move to diff function
-            }, 500);
+            const new_message = document.getElementById(data.message.id);
+            const message_status = new_message.getElementsByClassName('status')[0]
+            message_status.setAttribute('data-status', 'sent')
+            message_status.setAttribute('data-status', 'delivered') // Move to diff function
           }
           break;
         case 'typing':

@@ -37,6 +37,6 @@ function show_hide_users(element, json_users) {
     } else if (json_users.length > 1) {
         element.querySelector("#names").innerHTML = "Several people are typing..."
     } else {
-        element.querySelector("#names").innerHTML = "Nobody is typing..."
+        element.querySelector("#names").innerHTML = ""
     }
 }

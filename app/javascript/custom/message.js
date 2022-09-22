@@ -54,11 +54,11 @@ document.addEventListener('turbolinks:load', () => {
 
     function reset_typing_countdown() {
         if (countdown) { clearTimeout(countdown); }
-        typing_countdown_timer();
+        countdown_timer();
     }
     
     // Adjust the countdown time to change the length of time the user is considered typing
-    function typing_countdown_timer() { 
+    function countdown_timer() { 
         countdown = setTimeout(function () { stop_typing() }, 3000)
     }
     

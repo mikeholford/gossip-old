@@ -38,3 +38,21 @@
   <%= render "messages/form", message: Message.new, room: @room %>
 
 </div>
+
+
+<script>
+  var messages = document.getElementsByClassName("message");
+
+  Array.from(messages).forEach(function (item, index) {
+    if (index > 0) {
+      if (messages[index + 1].dataset.userId == item.dataset.userId) {
+        item.classList.add("next-same-user");
+      } 
+
+      if (messages[index - 1].dataset.userId == item.dataset.userId) {
+        item.classList.add("prev-same-user");
+      } 
+     
+    } 
+  });
+</script>

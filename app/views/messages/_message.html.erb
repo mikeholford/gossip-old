@@ -1,9 +1,15 @@
-<div class="w-full inline-block relative" id="<%= ref %>"">
-    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-1 my-1" style="max-width: 75%;">
-        <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
-            <% unless primary %><div class=""><small><i><%= message.user.email %></i></small></div><% end %>
-            <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>
-            <% if primary %><div class="status <%= primary ? "primary" : "#{message.membership.role}" %> inline-block	align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
+<div class="w-full inline-block relative " id="<%= ref %>"">
+    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-1 my-0" style="max-width: 75%;">
+        <div class="flex">
+            <% if !primary %>
+                <img class="user-avatar w-8 h-8 rounded-full mr-1 flex-none mt-auto" src="<%= message.user.avatar || 'https://imgs.search.brave.com/JzE2q6hMHca_kgeTAmLJQS80sM46IA-CjufMeYld81c/rs:fit:1024:1024:1/g:ce/aHR0cHM6Ly9pdXBh/Yy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTgvMDUvZGVm/YXVsdC1hdmF0YXIu/cG5n' %>">
+            <% end %>
+            <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
+                <% unless primary %><div class=""><small><i><%= message.user.username || message.user.email %></i></small></div><% end %>
+                <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>
+                <% if primary %><div class="status <%= primary ? "primary" : "#{message.membership.role}" %> inline-block align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
+            </div>  
         </div>  
+
     </div>
 </div>  

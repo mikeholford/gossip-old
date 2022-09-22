@@ -11,6 +11,16 @@
         background-color: #3675A6 !important;
         color: white;
     }
+    
+    border-radius: 0.8rem;
+    &.next-same-user {
+        border-bottom-left-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+    }
+    &.prev-same-user {
+        border-top-left-radius: 0.2rem;
+        border-top-right-radius: 0.2rem;
+    }
 }
 
 
