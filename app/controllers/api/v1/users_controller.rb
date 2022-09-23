@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         if @user.save
             render :show, status: :ok
         else
-            render_error(@user)
+            render_error(@user.errors.full_messages)
         end
     else
         render :show, status: :ok

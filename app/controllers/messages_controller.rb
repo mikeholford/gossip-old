@@ -32,7 +32,6 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.user = current_user
     if @message.save 
-      @message.send_webhook('message.created')
       SendMessageJob.perform_later(@message, 'app')
     else
       # TODO: handle errors

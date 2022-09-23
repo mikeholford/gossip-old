@@ -1,15 +1,23 @@
-<div class="w-full inline-block relative " id="<%= ref %>"">
-    <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-1 my-0" style="max-width: 75%;">
-        <div class="flex">
-            <% if !primary %>
-                <img class="user-avatar w-8 h-8 rounded-full mr-1 flex-none mt-auto" src="<%= message.user.avatar || 'https://imgs.search.brave.com/JzE2q6hMHca_kgeTAmLJQS80sM46IA-CjufMeYld81c/rs:fit:1024:1024:1/g:ce/aHR0cHM6Ly9pdXBh/Yy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTgvMDUvZGVm/YXVsdC1hdmF0YXIu/cG5n' %>">
-            <% end %>
-            <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
-                <% unless primary %><div class=""><small><i><%= message.user.username || message.user.email %></i></small></div><% end %>
-                <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>
-                <% if primary %><div class="status <%= primary ? "primary" : "#{message.membership.role}" %> inline-block align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
-            </div>  
+<div class="w-full inline-block relative mb-2 message-wrapper <%= with_class %>" id="<%= ref %>" data-user-id="<%= message.user.id %>">
+  <div class="<%= primary ? 'float-right' : 'float-left' %> ml-1 mr-1 my-0" style="max-width: 75%;">
+    <div class="flex">
+      <% if !primary %>
+        <div class="avatar w-8 h-8 rounded-full mr-1 flex-none mt-auto" style="background-image: url(<%= message.user.avatar || 'https://imgs.search.brave.com/JzE2q6hMHca_kgeTAmLJQS80sM46IA-CjufMeYld81c/rs:fit:1024:1024:1/g:ce/aHR0cHM6Ly9pdXBh/Yy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTgvMDUvZGVm/YXVsdC1hdmF0YXIu/cG5n' %>)"></div>
+      <% end %>
+      
+      <div class="relative">
+        <!-- Add image if present-->
+        <% if message.attachment.present? %>
+          <img src="<%= url_for(message.attachment) %>" class="max-w-xs mb-1 image-attachment">
+        <% end %>
+
+        <!--<% unless primary %><div class="pl-1 pb-1 text-gray-500 username"><small><%= message.user.username || message.user.email %></small></div><% end %>-->
+        <div data-user-id="<%= message.user.id %>" class="message relative table-cell text-white <%= primary ? "primary" : "#{message.membership.role}" %> p-2 rounded-lg" >
+          <span class="body"><%= sanitize(message.body.to_s.gsub(/\n/, '<br>').html_safe, tags: %w(br)) %></span>
+          <% if primary %><div class="status <%= primary ? "primary" : "#{message.membership.role}" %> inline-block align-bottom float-right ml-2" data-status="<%= status %>"></div><% end %>
         </div>  
+      </div>  
 
     </div>
-</div>  
+  </div>
+</div>

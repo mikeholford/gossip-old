@@ -14,8 +14,8 @@ module Renderable
     render json: { error: exception.message }, status: :not_found
   end
 
-  def render_error(element)
-    render json: { errors: element.errors.messages.flatten },
+  def render_error(errors)
+    render json: { errors: errors },
       status: :unprocessable_entity
   end
 

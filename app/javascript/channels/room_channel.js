@@ -1,5 +1,7 @@
 import consumer from "./consumer"
 import { add_typing, remove_typing } from '../custom/typing';
+import { init_chat_display } from "../custom/message";
+
 
 document.addEventListener('turbolinks:load', () => {
   const room = document.getElementById('room');
@@ -17,11 +19,12 @@ document.addEventListener('turbolinks:load', () => {
 
     received(data) {
       const current_user_id = Number(room.getAttribute('data-user-id'));
-
       switch (data.category) {
         case 'message':
           if (current_user_id !== data.message.user_id) {
+            remove_typing(data.username)
             add_html(data.html);
+            init_chat_display();
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
           } else {
             const new_message = document.getElementById(data.message.id);

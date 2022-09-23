@@ -7,7 +7,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
     if @room.save
         render :show, status: :ok
     else
-        render_error(@room)
+        render_error(@room.errors.full_messages)
     end
   end
 

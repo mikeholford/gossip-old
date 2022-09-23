@@ -38,5 +38,6 @@ gem 'http'
 gem 'sidekiq'
 gem 'tailwindcss-rails'
 gem 'inline_svg'
+gem 'pagy'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   # API
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :messages, only: :create
+      resources :messages, only: :create do 
+        collection do 
+          post :action
+        end
+      end
       resources :memberships, only: :create
       resources :rooms, only: :create
       resources :users, only: :create do 

@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  belongs_to :account, optional: true
+
   has_many :memberships
   has_many :rooms, through: :memberships
 

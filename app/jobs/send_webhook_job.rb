@@ -9,8 +9,6 @@ data = {data:{id: "xxx", user_id: 3, room_id: 10, category: 'text', body: "HELLO
 
   def perform(endpoint, data, retry_count=0)
 
-    # return if cancelled?
-
     digest = OpenSSL::Digest.new('sha256')
     signature = OpenSSL::HMAC.digest(digest, endpoint.secret, data.to_json)
     sig_header = Base64.encode64(signature).strip()

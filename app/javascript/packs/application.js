@@ -15,5 +15,12 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-require("custom/helpers")
-require("custom/message")
+// Internal Imports
+import { initSender } from "../custom/message";
+import { initInfiniteScroll } from "../components/init_infinite_scroll";
+
+// Preload Functions
+document.addEventListener("turbolinks:load", () => {
+  initSender();
+  initInfiniteScroll();
+})

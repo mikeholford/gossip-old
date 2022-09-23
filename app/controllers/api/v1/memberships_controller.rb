@@ -7,7 +7,7 @@ class Api::V1::MembershipsController < Api::V1::BaseController
     if @membership.save
         render :show, status: :ok
     else
-        render_error(@membership)
+        render_error(@membership.errors.full_messages)
     end
   end
 

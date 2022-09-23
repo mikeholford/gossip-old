@@ -1,26 +1,45 @@
 
+.avatar {
+  background-position: center;
+  background-size: cover;
+}
 
 .message {   
     background-color: #23d160;
     color: white;
     &.regular {
-        background-color: #D1D5DB !important;
-        color: black;
+      background-color: #D1D5DB !important;
+      color: black;
     }
     &.api {
-        background-color: #3675A6 !important;
-        color: white;
+      background-color: #3675A6 !important;
+      color: white;
     }
     
     border-radius: 0.8rem;
-    &.next-same-user {
-        border-bottom-left-radius: 0.2rem;
+
+    &.primary {
+      float: right;
+      &.has-next {
         border-bottom-right-radius: 0.2rem;
-    }
-    &.prev-same-user {
-        border-top-left-radius: 0.2rem;
+      }
+      &.has-prev {
         border-top-right-radius: 0.2rem;
+      }
     }
+    &:not(.primary) {
+      float: left;
+      &.has-next {
+        border-bottom-left-radius: 0.2rem;
+      }
+      &.has-prev {
+        border-top-left-radius: 0.2rem;
+      }
+    }
+}
+
+.image-attachment {
+  border-radius: 0.8rem;
 }
 
 

@@ -6,10 +6,14 @@ class SendMessageJob < ApplicationJob
 
     html = @job_renderer.render(
       partial: "messages/message", 
-      locals: {message: message, primary: false, ref: message.id, status: ""}
+      locals: {message: message, primary: false, ref: message.id, status: "", with_class: ""}
     )
 
-    ActionCable.server.broadcast("room_channel_#{message.room_id}", {category: 'message', html: html, message: message, source: source})
+    # Send Webhook 
+    webhook_event = message.user.account.present? ? 'echo' : 'created'
+    message.send_webhook("message.#{webhook_event}")
+
+    ActionCable.server.broadcast("room_channel_#{message.room_id}", {category: 'message', html: html, message: message, source: source, username: message.user.username})
 
   end
 

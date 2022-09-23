@@ -5,6 +5,7 @@ class Account < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :rooms
+  has_many :users
   has_many :webhook_endpoints
 
   validates_presence_of :username

@@ -13,7 +13,21 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1 or /rooms/1.json
   def show
+    
     @membership = @room.membership_for(current_user.id)
+
+    # @pagy, @messages = pagy(@room.messages.order(created_at: :desc), items: 20)
+
+    
+    if params[:jsload]
+      
+      @pagy, @messages = pagy(@room.messages.order(created_at: :desc), page: params[:page])
+
+      html = @messages.map { |m| [render_to_string(partial: "messages/message", locals: { message: m, primary: (m.user == current_user), ref: m.id, status: "delivered", with_class: "" } )] }
+
+      render json: { html: html, pagination: (view_context.pagy_nav(@pagy) if @pagy.present? ) }
+    end
+
   end
 
   # GET /rooms/new
